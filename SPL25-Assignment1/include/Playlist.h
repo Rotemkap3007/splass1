@@ -86,6 +86,8 @@ public:
      */
     std::vector<AudioTrack*> getTracks() const;
 
+    Playlist(const Playlist&) = delete;
+Playlist& operator=(const Playlist&) = delete;
 };
 
 
