@@ -14,10 +14,10 @@ WAVTrack::WAVTrack(const std::string& title, const std::vector<std::string>& art
 void WAVTrack::load() {
     // TODO: Implement realistic WAV loading simulation
     // NOTE: Use exactly 2 spaces before the arrow (→) character
-    std::cout << "[WAVTrack::load] Loading WAV: " << title << " at " << sample_rate << " Hz " << bit_depth << " bit (uncompressed)... " << std::endl;
+    std::cout << "[WAVTrack::load] Loading WAV: \"" << title << "\" at " << sample_rate << "Hz/" << bit_depth << "bit (uncompressed)..." << std::endl;
     long size = duration_seconds * sample_rate * (bit_depth / 8) * 2;
-    std::cout << "  → Estimated file size: " << size << " bytes " << std::endl;
-    std::cout << "  → Fast loading due to uncompressed format. " << std::endl;
+    std::cout << "  → Estimated file size: " << size << " bytes" << std::endl;
+    std::cout << "  → Fast loading due to uncompressed format." << std::endl;
 }
 
 void WAVTrack::analyze_beatgrid() {
@@ -29,7 +29,7 @@ void WAVTrack::analyze_beatgrid() {
     // 3. Print number of beats and mention uncompressed precision
     // should print "  → Estimated beats: <beats>  → Precision factor: 1.0 (uncompressed audio)"
     double estimated_beats = (duration_seconds/60.0)*bpm;
-    std::cout << "  → Estimated beats: " << estimated_beats << "  → Precision factor: 1.0 (uncompressed audio)"<< std::endl;
+    std::cout << "  → Estimated beats: " << estimated_beats << "  → Precision factor: 1 (uncompressed audio)"<< std::endl;
 }
 
 double WAVTrack::get_quality_score() const {
@@ -42,6 +42,9 @@ double WAVTrack::get_quality_score() const {
     if(bit_depth >= 16){ base_score = base_score+10;}
     if(bit_depth >= 24){ base_score = base_score+5;}
     base_score = std::min(base_score,100.0);
+    #ifdef DEBUG
+std::cout << "[WAVTrack::get_quality_score] \"" << title << "\" score = " << base_score << "/100" << std::endl;
+#endif
     return base_score; // Replace with your implementation
 }
 
